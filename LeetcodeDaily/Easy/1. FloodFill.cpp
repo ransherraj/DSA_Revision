@@ -1,4 +1,4 @@
-/*
+/*****
 
 An image is represented by an m x n integer grid image where image[i][j] represents the pixel value of the image.
 
@@ -33,4 +33,29 @@ n == image[i].length
 0 <= sr < m
 0 <= sc < n
 
-*/
+
+  ***/
+
+
+class Solution {
+public:
+    
+    void dfs(vector<vector<int>>& im, vector<vector<int>> vis, int st, int sr, int sc, int color){
+        int m = im.size(), n = im[0].size();
+        if(sr < 0 || sr >= m || sc < 0 || sc >= n || im[sr][sc] != st || vis[sr][sc]) return;
+        im[sr][sc] = color;
+        vis[sr][sc] = 1;
+        
+        dfs(im, vis, st, sr+1, sc, color);
+        dfs(im, vis, st, sr-1, sc, color);
+        dfs(im, vis, st, sr, sc+1, color);
+        dfs(im, vis, st, sr, sc-1, color);
+    }
+    
+    vector<vector<int>> floodFill(vector<vector<int>>& im, int sr, int sc, int color) {
+        int m = im.size(), n = im[0].size();
+        vector<vector<int>> vis(m, vector<int>(n, 0));
+        dfs(im, vis, im[sr][sc], sr, sc, color);
+        return im;
+    }
+};
